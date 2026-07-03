@@ -22,11 +22,11 @@ elif operator == '*':
     result = num1 * num2
 elif operator == '/':
     if num2 == 0:
-        print(f"Cannot divide by zero")
+        print("Cannot divide by zero")
     else:
         result = num1 / num2
 else:
-    print(f"Invalid operator")
+    print("Invalid operator")
 
 if result is not None:
     print(f"Result = {result}")
