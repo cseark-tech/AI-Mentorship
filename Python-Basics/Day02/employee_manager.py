@@ -1,4 +1,5 @@
 employees = []
+choice: str = 'y'
 
 def error_message():
     print("Please Enter valid numbers")
@@ -26,14 +27,11 @@ def add_employee():
         error_message()
     employees.append(employee)
     print("Employee added successfully.")    
-    add_MultipleEmployees()
+    
 
-def add_MultipleEmployees():
-    addMultipleEmp = input("Do you want to add another employee? (y/n): ").lower()
-    if addMultipleEmp == 'y':
-        add_employee()
-
-add_employee()
+while choice == "y":
+    add_employee()
+    choice = input("Do you want to add another employee? (y/n): ").lower()    
 print(f"Employee Information: {employees}")
 
 
