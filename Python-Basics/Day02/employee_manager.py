@@ -27,12 +27,28 @@ def add_employee():
         error_message()
     employees.append(employee)
     print("Employee added successfully.")    
-    
+
+def view_employees():   
+    if not employees:
+        print("No employees found")
+        return
+    employee_number = 1
+    for employee in employees:
+        print("------------------")
+        print(f"Employee {employee_number}")
+        print("-------------------")
+        print(f"Name: {employee['name']}")
+        print(f"Age: {employee['age']}")
+        print(f"Experience: {employee['experience']}")
+        print(f"Salary: {employee['salary']}")
+        print()
+        employee_number +=1
+
 
 while choice == "y":
     add_employee()
     choice = input("Do you want to add another employee? (y/n): ").lower()    
-print(f"Employee Information: {employees}")
+view_employees()
 
 
 
