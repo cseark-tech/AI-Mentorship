@@ -1,6 +1,7 @@
 employees = []
 choice: str = 'y'
 
+
 def error_message():
     print("Please Enter valid numbers")
     exit()
@@ -33,22 +34,37 @@ def view_employees():
         print("No employees found")
         return
     employee_number = 1
-    for employee in employees:
-        print("------------------")
-        print(f"Employee {employee_number}")
-        print("-------------------")
-        print(f"Name: {employee['name']}")
-        print(f"Age: {employee['age']}")
-        print(f"Experience: {employee['experience']}")
-        print(f"Salary: {employee['salary']}")
-        print()
+    for employee in employees:       
+        display_employeeList(employee, employee_number)
         employee_number +=1
 
+def search_employee():
+    name = input("Enter name to search from employees list: ").lower()
+    employee_number = 1
+    found = False
+    for employee in employees:
+        if employee['name'].lower() == name:
+            found = True
+            display_employeeList(employee, employee_number)
+            employee_number +=1
+    if not found:
+        print("No employee found")
+
+def display_employeeList(emp, empnumber):
+    print("------------------")
+    print(f"Employee {empnumber}")
+    print("-------------------")
+    print(f"Name: {emp['name']}")
+    print(f"Age: {emp['age']}")
+    print(f"Experience: {emp['experience']}")
+    print(f"Salary: {emp['salary']}")
+    print()
 
 while choice == "y":
     add_employee()
     choice = input("Do you want to add another employee? (y/n): ").lower()    
 view_employees()
+search_employee()
 
 
 
