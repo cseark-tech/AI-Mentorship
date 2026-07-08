@@ -1,0 +1,30 @@
+[
+    {
+        "name": "arun",
+        "age": 35,
+        "experience": 13,
+        "salary": 120000.0,
+        "id": 1001
+    },
+    {
+        "name": "jack",
+        "age": 30,
+        "experience": 10,
+        "salary": 130000.0,
+        "id": 1002
+    },
+    {
+        "name": "megna",
+        "age": 7,
+        "experience": 2,
+        "salary": 12345.0,
+        "id": 1003
+    },
+    {
+        "name": "ajay",
+        "age": 23,
+        "experience": 34,
+        "salary": 1212.0,
+        "id": 1001
+    }
+]
