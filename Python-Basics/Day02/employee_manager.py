@@ -1,5 +1,6 @@
 employees = []
 choice: str = 'y'
+employee_id: int = 1000
 
 
 def error_message():
@@ -11,8 +12,12 @@ def add_employee():
     "name": "",
     "age": "",
     "experience": "",
-    "salary": ""
+    "salary": "",
+    "id": 0
     }
+    global employee_id 
+    employee_id += 1
+    employee["id"] = employee_id
     employee["name"] = input("Please enter Employee Name: ")
     try: 
         employee["age"] = int(input("Please enter Employee Age: "))
@@ -39,14 +44,18 @@ def view_employees():
         employee_number +=1
 
 def search_employee():
-    name = input("Enter name to search from employees list: ").lower()
+    try:
+        search_id = int(input("Enter Employee ID to search from employees list: "))
+    except ValueError:
+        error_message()
     employee_number = 1
     found = False
     for employee in employees:
-        if employee['name'].lower() == name:
+        if employee['id'] == search_id:
             found = True
             display_employeeList(employee, employee_number)
             employee_number +=1
+            break
     if not found:
         print("No employee found")
 
@@ -54,6 +63,7 @@ def display_employeeList(emp, empnumber):
     print("------------------")
     print(f"Employee {empnumber}")
     print("-------------------")
+    print(f"ID: {emp['id']}")
     print(f"Name: {emp['name']}")
     print(f"Age: {emp['age']}")
     print(f"Experience: {emp['experience']}")
