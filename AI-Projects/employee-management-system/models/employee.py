@@ -71,3 +71,13 @@ class Employee:
         print(f"DOB        : {self.dob}")
         print(f"Department : {self.department}")
         print(f"Salary     : {self.salary}")
+
+    def to_dict(self):
+        return {
+            "employee_id": self.employee_id,
+            "name": self.name,
+            "dob": self.dob.isoformat(),
+            "joining_date": self.joining_date.isoformat(),
+            "department": self.department,
+            "salary": self.salary
+        }
