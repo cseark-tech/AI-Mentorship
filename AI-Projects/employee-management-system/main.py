@@ -1,7 +1,10 @@
 from datetime import date
 from managers.employee_manager import EmployeeManager
+from storage.storage import Storage
 
-manager = EmployeeManager()
+storage = Storage()
+manager = EmployeeManager(storage)
+storage.save(manager.employees)
 
 employee1 = manager.add_employee(
     "Arun",
