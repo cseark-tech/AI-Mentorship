@@ -1,0 +1,26 @@
+[
+    {
+        "employee_id": 101,
+        "name": "Arun",
+        "dob": "1990-06-15",
+        "joining_date": "2020-01-10",
+        "department": "Engineering",
+        "salary": 80000
+    },
+    {
+        "employee_id": 102,
+        "name": "John",
+        "dob": "1995-07-20",
+        "joining_date": "2023-02-01",
+        "department": "QA",
+        "salary": 45000
+    },
+    {
+        "employee_id": 103,
+        "name": "Jack",
+        "dob": "1995-10-20",
+        "joining_date": "2025-02-01",
+        "department": "QA",
+        "salary": 55000
+    }
+]

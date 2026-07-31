@@ -1,10 +1,10 @@
 from datetime import date
 from managers.employee_manager import EmployeeManager
-from storage.storage import Storage
+from storage.json_storage import JsonStorage
 
-storage = Storage()
+storage = JsonStorage()
 manager = EmployeeManager(storage)
-storage.save(manager.employees)
+
 
 employee1 = manager.add_employee(
     "Arun",
@@ -22,8 +22,13 @@ employee2 = manager.add_employee(
     45000
 )
 
-print(print(f"Employee ID: {employee1.employee_id}"))
-print(print(f"Employee ID: {employee2.employee_id}"))
+employee3 = manager.add_employee(
+    "Jack",
+    date(1995, 10, 20),
+    date(2025, 2, 1),
+    "QA",
+    55000
+)
 
 employee = manager.search_employee(102)
 

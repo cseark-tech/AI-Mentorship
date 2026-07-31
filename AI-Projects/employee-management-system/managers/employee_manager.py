@@ -1,14 +1,18 @@
 from models.employee import Employee
 
 class EmployeeManager:
-    def __init__(self):
-        self.employees = {}
-        self.next_employee_id = 101
+    def __init__(self, storage):
+        self.storage = storage
+        self._employees = {}
+        self._next_employee_id = 101
 
     def _generate_employee_id(self):
-        employee_id = self.next_employee_id
-        self.next_employee_id += 1
+        employee_id = self._next_employee_id
+        self._next_employee_id += 1
         return employee_id
+
+    def get_all_employees(self):
+        return list(self._employees.values())
 
     def add_employee(
             self,
@@ -29,8 +33,12 @@ class EmployeeManager:
             salary
         )
 
-        self.employees[employee_id] = employee
+        self._employees[employee_id] = employee
+
+        self.storage.save(
+            self.get_all_employees()
+        )
         return employee
 
     def search_employee(self, employee_id):
-        return self.employees.get(employee_id)
+        return self._employees.get(employee_id)
