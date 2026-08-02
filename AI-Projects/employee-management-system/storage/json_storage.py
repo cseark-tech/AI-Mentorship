@@ -19,8 +19,10 @@ class JsonStorage(Storage):
                 indent=4
             )
 
-        print("Saving employees...")
-
     def load(self):
-        print("Loading employees...")
-        pass
+        with open(
+            "data/employees.json",
+            "r",
+            encoding="utf-8"
+        ) as file:
+            return json.load(file)

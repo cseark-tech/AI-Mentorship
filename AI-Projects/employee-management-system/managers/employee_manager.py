@@ -42,3 +42,13 @@ class EmployeeManager:
 
     def search_employee(self, employee_id):
         return self._employees.get(employee_id)
+
+    def load_employees(self):
+        employee_data = self.storage.load()
+        for data in employee_data:
+            employee = Employee.from_dict(data)
+            self._employees[employee.employee_id] = employee
+        if self._employees:
+            self._next_employee_id = (
+                max(self._employees.keys()) + 1
+            )

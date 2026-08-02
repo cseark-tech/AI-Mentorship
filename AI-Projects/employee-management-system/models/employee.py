@@ -81,3 +81,15 @@ class Employee:
             "department": self.department,
             "salary": self.salary
         }
+
+    @classmethod
+    def from_dict(cls, data):
+
+        return cls(
+            employee_id=data["employee_id"],
+            name=data["name"],
+            dob=date.fromisoformat(data["dob"]),
+            joining_date=date.fromisoformat(data["joining_date"]),
+            department=data["department"],
+            salary=data["salary"]
+        )

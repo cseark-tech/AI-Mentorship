@@ -4,6 +4,7 @@ from storage.json_storage import JsonStorage
 
 storage = JsonStorage()
 manager = EmployeeManager(storage)
+manager.load_employees()
 
 
 employee1 = manager.add_employee(
