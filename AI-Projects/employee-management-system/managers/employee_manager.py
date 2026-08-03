@@ -12,7 +12,16 @@ class EmployeeManager:
         return employee_id
 
     def get_all_employees(self):
-        return list(self._employees.values())
+        return list(self._employees.values())    
+
+    def update_employee_department(self,employee_id,department):
+        employee = self.search_employee(employee_id)
+        if employee is None:
+            raise ValueError("Employee Not Found.")
+        employee.update_department(department)
+        self.storage.save(
+            self.get_all_employees()
+        )
 
     def add_employee(
             self,

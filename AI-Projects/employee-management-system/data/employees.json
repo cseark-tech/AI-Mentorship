@@ -12,7 +12,7 @@
         "name": "John",
         "dob": "1995-07-20",
         "joining_date": "2023-02-01",
-        "department": "QA",
+        "department": "TECH",
         "salary": 45000
     },
     {
@@ -52,7 +52,7 @@
         "name": "Arun",
         "dob": "1990-06-15",
         "joining_date": "2020-01-10",
-        "department": "Engineering",
+        "department": "TECH",
         "salary": 80000
     },
     {
@@ -89,6 +89,30 @@
     },
     {
         "employee_id": 112,
+        "name": "Jack",
+        "dob": "1995-10-20",
+        "joining_date": "2025-02-01",
+        "department": "QA",
+        "salary": 55000
+    },
+    {
+        "employee_id": 113,
+        "name": "Arun",
+        "dob": "1990-06-15",
+        "joining_date": "2020-01-10",
+        "department": "Engineering",
+        "salary": 80000
+    },
+    {
+        "employee_id": 114,
+        "name": "John",
+        "dob": "1995-07-20",
+        "joining_date": "2023-02-01",
+        "department": "QA",
+        "salary": 45000
+    },
+    {
+        "employee_id": 115,
         "name": "Jack",
         "dob": "1995-10-20",
         "joining_date": "2025-02-01",

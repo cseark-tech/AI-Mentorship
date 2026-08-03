@@ -33,6 +33,9 @@ class Employee:
         self._validate_salary(new_salary)
         self.salary = new_salary
 
+    def update_department(self, new_department):
+        self.department = new_department
+
     def calculate_experience(self):
         today = date.today()
 
