@@ -1,4 +1,5 @@
 from models.employee import Employee
+from exceptions.employee_not_found_error import EmployeeNotFoundError
 
 class EmployeeManager:
     def __init__(self, storage):
@@ -12,12 +13,16 @@ class EmployeeManager:
         return employee_id
 
     def get_all_employees(self):
-        return list(self._employees.values())    
+        return list(self._employees.values()) 
 
-    def update_employee_department(self,employee_id,department):
+    def _get_employee_or_raise(self, employee_id):
         employee = self.search_employee(employee_id)
         if employee is None:
-            raise ValueError("Employee Not Found.")
+            raise EmployeeNotFoundError(employee_id)
+        return employee   
+
+    def update_employee_department(self,employee_id,department):
+        employee = self._get_employee_or_raise(employee_id)
         employee.update_department(department)
         self.storage.save(
             self.get_all_employees()
@@ -49,7 +54,7 @@ class EmployeeManager:
         )
         return employee
 
-    def search_employee(self, employee_id):
+    def search_employee(self, employee_id):      
         return self._employees.get(employee_id)
 
     def load_employees(self):

@@ -33,7 +33,7 @@ manager.load_employees()
 
 manager.update_employee_department(107,"TECH")
 
-employee = manager.search_employee(102)
+employee = manager.search_employee(302)
 
 
 if employee:
