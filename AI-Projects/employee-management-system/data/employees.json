@@ -76,7 +76,7 @@
         "name": "Arun",
         "dob": "1990-06-15",
         "joining_date": "2020-01-10",
-        "department": "Engineering",
+        "department": "TECH",
         "salary": 80000
     },
     {
@@ -118,5 +118,21 @@
         "joining_date": "2025-02-01",
         "department": "QA",
         "salary": 55000
+    },
+    {
+        "employee_id": 116,
+        "name": "Jill cleek",
+        "dob": "1995-10-20",
+        "joining_date": "2025-02-01",
+        "department": "Manager",
+        "salary": 550000
+    },
+    {
+        "employee_id": 117,
+        "name": "Jill cleek",
+        "dob": "1995-10-20",
+        "joining_date": "2025-02-01",
+        "department": "Manager",
+        "salary": 550000
     }
 ]

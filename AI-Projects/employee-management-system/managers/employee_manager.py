@@ -1,7 +1,9 @@
 from models.employee import Employee
 from exceptions.employee_not_found_error import EmployeeNotFoundError
+import logging
 
 class EmployeeManager:
+    logger = logging.getLogger(__name__)
     def __init__(self, storage):
         self.storage = storage
         self._employees = {}
@@ -18,6 +20,10 @@ class EmployeeManager:
     def _get_employee_or_raise(self, employee_id):
         employee = self.search_employee(employee_id)
         if employee is None:
+            self.logger.warning(
+                "Employee %s was not found",
+                employee_id
+            )
             raise EmployeeNotFoundError(employee_id)
         return employee   
 
@@ -26,6 +32,11 @@ class EmployeeManager:
         employee.update_department(department)
         self.storage.save(
             self.get_all_employees()
+        )
+        self.logger.info(
+            "Employee %s department updated to %s",
+            employee_id,
+            department
         )
 
     def add_employee(
@@ -51,6 +62,10 @@ class EmployeeManager:
 
         self.storage.save(
             self.get_all_employees()
+        )
+        self.logger.info(
+            "Employee %s added successfully",
+            employee_id
         )
         return employee
 

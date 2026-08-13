@@ -1,7 +1,9 @@
+from logging_config import configure_logging
 from datetime import date
 from managers.employee_manager import EmployeeManager
 from storage.json_storage import JsonStorage
 
+configure_logging()
 storage = JsonStorage()
 manager = EmployeeManager(storage)
 manager.load_employees()
@@ -24,16 +26,16 @@ manager.load_employees()
 # )
 
 # employee3 = manager.add_employee(
-#     "Jack",
+#     "Jill cleek",
 #     date(1995, 10, 20),
 #     date(2025, 2, 1),
-#     "QA",
-#     55000
+#     "Manager",
+#     550000
 # )
 
-manager.update_employee_department(107,"TECH")
+manager.update_employee_department(876,"TECH")
 
-employee = manager.search_employee(302)
+employee = manager.search_employee(999)
 
 
 if employee:
