@@ -1,7 +1,9 @@
 import json
+import logging
 from storage.storage import Storage
 
 class JsonStorage(Storage):
+    logger = logging.getLogger(__name__)
 
     def save(self, employees):
         data = []
@@ -20,9 +22,12 @@ class JsonStorage(Storage):
             )
 
     def load(self):
-        with open(
-            "data/employees.json",
-            "r",
-            encoding="utf-8"
-        ) as file:
-            return json.load(file)
+        try:
+            with open("data/employees.json", "r") as file:
+                return json.load(file)
+
+        except json.JSONDecodeError:
+            self.logger.exception(
+                "Failed to parse employee JSON data"
+            )
+            raise

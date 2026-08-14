@@ -1,0 +1,23 @@
+2026-08-14 11:47:34,476 - managers.employee_manager - INFO - Employee 108 department updated to TECH
+2026-08-14 11:54:08,597 - managers.employee_manager - INFO - Employee 108 department updated to TECH
+2026-08-14 11:54:27,476 - storage.json_storage - ERROR - Failed to parse employee JSON data
+Traceback (most recent call last):
+  File "C:\ARUN\AI-Python Learning\AI-Mentorship\AI-Projects\employee-management-system\storage\json_storage.py", line 27, in load
+    return json.load(file)
+           ~~~~~~~~~^^^^^^
+  File "C:\Users\Windows 11\AppData\Local\Python\pythoncore-3.14-64\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Users\Windows 11\AppData\Local\Python\pythoncore-3.14-64\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Windows 11\AppData\Local\Python\pythoncore-3.14-64\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Windows 11\AppData\Local\Python\pythoncore-3.14-64\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 5 column 9 (char 68)
+2026-08-14 11:55:10,937 - managers.employee_manager - INFO - Employee 108 department updated to TECH

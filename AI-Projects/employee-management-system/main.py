@@ -33,7 +33,7 @@ manager.load_employees()
 #     550000
 # )
 
-manager.update_employee_department(876,"TECH")
+manager.update_employee_department(108,"TECH")
 
 employee = manager.search_employee(999)
 
