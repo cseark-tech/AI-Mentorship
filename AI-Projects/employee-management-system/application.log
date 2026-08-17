@@ -21,3 +21,11 @@ Traceback (most recent call last):
                ~~~~~~~~~~~~~~^^^^^^^^
 json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 5 column 9 (char 68)
 2026-08-14 11:55:10,937 - managers.employee_manager - INFO - Employee 108 department updated to TECH
+2026-08-17 11:54:46,629 - managers.employee_manager - WARNING - Employee 199 was not found
+2026-08-17 11:55:34,102 - __main__ - ERROR - Unexpected application error
+Traceback (most recent call last):
+  File "C:\ARUN\AI-Python Learning\AI-Mentorship\AI-Projects\employee-management-system\main.py", line 40, in <module>
+    result = 10 / 0
+             ~~~^~~
+ZeroDivisionError: division by zero
+2026-08-17 12:03:41,711 - managers.employee_manager - WARNING - Employee 199 was not found
