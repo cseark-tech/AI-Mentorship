@@ -29,3 +29,4 @@ Traceback (most recent call last):
              ~~~^~~
 ZeroDivisionError: division by zero
 2026-08-17 12:03:41,711 - managers.employee_manager - WARNING - Employee 199 was not found
+2026-09-06 11:12:47,839 - managers.employee_manager - WARNING - Employee 199 was not found
