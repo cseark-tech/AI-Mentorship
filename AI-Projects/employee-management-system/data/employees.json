@@ -134,5 +134,13 @@
         "joining_date": "2025-02-01",
         "department": "Manager",
         "salary": 550000
+    },
+    {
+        "employee_id": 118,
+        "name": "mack",
+        "dob": "1990-12-22",
+        "joining_date": "2022-07-05",
+        "department": "IT",
+        "salary": 35000.0
     }
 ]
