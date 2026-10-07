@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException
 from managers.employee_manager import EmployeeManager
 from storage.json_storage import JsonStorage
-from api.schemas import EmployeeResponse,EmployeeCreateRequest
+from api.schemas import EmployeeResponse,EmployeeCreateRequest,EmployeeUpdateRequest
+from exceptions.employee_not_found_error import EmployeeNotFoundError
 
 app = FastAPI()
 storage = JsonStorage("data/employees.json")
@@ -34,3 +35,50 @@ def create_employee(request: EmployeeCreateRequest):
         request.salary
     )
     return employee.to_dict()
+
+@app.get("/employees/{employee_id}",
+         response_model=EmployeeResponse)
+def get_employee(employee_id: int):
+    try:
+        employee = manager.get_employee(employee_id)
+        return employee.to_dict()
+
+    except EmployeeNotFoundError as error:
+        raise HTTPException(
+            status_code=404,
+            detail=str(error)
+        )
+
+@app.patch(
+    "/employees/{employee_id}",
+    response_model=EmployeeResponse
+)
+def update_employee(
+    employee_id: int,
+    request: EmployeeUpdateRequest
+):
+    try:
+        employee = manager.update_employee(
+            employee_id,
+            request.department,
+            request.salary
+        )
+
+        return employee.to_dict()
+
+    except EmployeeNotFoundError as error:
+        raise HTTPException(
+            status_code=404,
+            detail=str(error)
+        )
+
+@app.delete("/employees/{employee_id}",
+            status_code=204)
+def delete_employee(employee_id: int):
+    try:
+        manager.delete_employee(employee_id)
+    except EmployeeNotFoundError as error:
+        raise HTTPException(
+            status_code=404,
+            detail=str(error)
+        )

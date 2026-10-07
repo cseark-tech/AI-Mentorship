@@ -4,8 +4,8 @@
         "name": "Arun",
         "dob": "1990-06-15",
         "joining_date": "2020-01-10",
-        "department": "Engineering",
-        "salary": 80000
+        "department": "ITS",
+        "salary": 10000.0
     },
     {
         "employee_id": 102,
@@ -54,14 +54,6 @@
         "joining_date": "2020-01-10",
         "department": "TECH",
         "salary": 80000
-    },
-    {
-        "employee_id": 108,
-        "name": "John",
-        "dob": "1995-07-20",
-        "joining_date": "2023-02-01",
-        "department": "TECH",
-        "salary": 45000
     },
     {
         "employee_id": 109,

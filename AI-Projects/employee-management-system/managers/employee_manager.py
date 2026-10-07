@@ -27,6 +27,9 @@ class EmployeeManager:
             raise EmployeeNotFoundError(employee_id)
         return employee   
 
+    def get_employee(self, employee_id):
+        return self._get_employee_or_raise(employee_id)
+
     def update_employee_department(self,employee_id,department):
         employee = self._get_employee_or_raise(employee_id)
         employee.update_department(department)
@@ -81,3 +84,24 @@ class EmployeeManager:
             self._next_employee_id = (
                 max(self._employees.keys()) + 1
             )
+
+    def update_employee(
+    self,
+    employee_id,
+    department=None,
+    salary=None
+    ):
+        employee = self._get_employee_or_raise(employee_id)
+
+        if department is not None:
+            employee.update_department(department)
+        if salary is not None:
+            employee.update_salary(salary)
+        self.storage.save(self._employees.values())
+        return employee
+
+    def delete_employee(self, employee_id):
+        employee = self._get_employee_or_raise(employee_id)
+        del self._employees[employee_id]
+        self.storage.save(self._employees.values())
+        return employee

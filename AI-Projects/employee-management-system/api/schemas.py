@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
+from typing import Optional
 
 class EmployeeCreateRequest(BaseModel):
     name: str
@@ -15,4 +16,8 @@ class EmployeeResponse(BaseModel):
     joining_date: date
     department: str
     salary: float
+
+class EmployeeUpdateRequest(BaseModel):
+    department: Optional[str] = None
+    salary: Optional[float] = None
 
