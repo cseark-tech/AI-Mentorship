@@ -1,14 +1,15 @@
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from api.schemas import (
+    EmployeeCreateRequest,
+    EmployeeResponse,
+    EmployeeUpdateRequest,
+)
+from database.dependencies import get_db
+from database.repository import EmployeeRepository
 from managers.employee_manager import EmployeeManager
-from storage.json_storage import JsonStorage
-from api.schemas import EmployeeResponse,EmployeeCreateRequest,EmployeeUpdateRequest
 from exceptions.employee_not_found_error import EmployeeNotFoundError
 
 app = FastAPI()
-storage = JsonStorage("data/employees.json")
-manager = EmployeeManager(storage)
-
-manager.load_employees()
 
 @app.get("/")
 def home():
@@ -16,8 +17,18 @@ def home():
 
 @app.get("/employees",
           response_model=list[EmployeeResponse])
-def get_employees():
+@app.get(
+    "/employees",
+    response_model=list[EmployeeResponse]
+)
+def get_employees(db=Depends(get_db)):
+
+    repository = EmployeeRepository(db)
+
+    manager = EmployeeManager(repository)
+
     employees = manager.get_all_employees()
+
     return [
         employee.to_dict()
         for employee in employees
@@ -26,7 +37,10 @@ def get_employees():
 @app.post("/employees",
           response_model=EmployeeCreateRequest,
           status_code=201)
-def create_employee(request: EmployeeCreateRequest):
+def create_employee(request: EmployeeCreateRequest,
+                    db=Depends(get_db)):
+    repository = EmployeeRepository(db)
+    manager = EmployeeManager(repository)
     employee = manager.add_employee(
         request.name,
         request.dob,
@@ -36,9 +50,17 @@ def create_employee(request: EmployeeCreateRequest):
     )
     return employee.to_dict()
 
-@app.get("/employees/{employee_id}",
-         response_model=EmployeeResponse)
-def get_employee(employee_id: int):
+@app.get(
+    "/employees/{employee_id}",
+    response_model=EmployeeResponse
+)
+def get_employee(
+    employee_id: int,
+    db=Depends(get_db)
+):
+
+    repository = EmployeeRepository(db)
+    manager = EmployeeManager(repository)
     try:
         employee = manager.get_employee(employee_id)
         return employee.to_dict()
@@ -55,8 +77,11 @@ def get_employee(employee_id: int):
 )
 def update_employee(
     employee_id: int,
-    request: EmployeeUpdateRequest
+    request: EmployeeUpdateRequest,
+    db=Depends(get_db)
 ):
+    repository = EmployeeRepository(db)
+    manager = EmployeeManager(repository)
     try:
         employee = manager.update_employee(
             employee_id,
@@ -65,6 +90,12 @@ def update_employee(
         )
 
         return employee.to_dict()
+    
+    except EmployeeNotFoundError as error:
+        raise HTTPException(
+            status_code=404,
+            detail=str(error)
+        )
 
     except EmployeeNotFoundError as error:
         raise HTTPException(
@@ -74,7 +105,9 @@ def update_employee(
 
 @app.delete("/employees/{employee_id}",
             status_code=204)
-def delete_employee(employee_id: int):
+def delete_employee(employee_id: int, db=Depends(get_db)):
+    repository = EmployeeRepository(db)
+    manager = EmployeeManager(repository)
     try:
         manager.delete_employee(employee_id)
     except EmployeeNotFoundError as error:
@@ -82,3 +115,14 @@ def delete_employee(employee_id: int):
             status_code=404,
             detail=str(error)
         )
+
+@app.get("/db/employees")
+def get_database_employees(db=Depends(get_db)):
+    repository = EmployeeRepository(db)
+
+    employees = repository.get_all()
+
+    return [
+        employee.to_dict()
+        for employee in employees
+    ]

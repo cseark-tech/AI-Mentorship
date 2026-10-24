@@ -4,8 +4,8 @@ import logging
 
 class EmployeeManager:
     logger = logging.getLogger(__name__)
-    def __init__(self, storage):
-        self.storage = storage
+    def __init__(self, repository):
+        self.repository = repository
         self._employees = {}
         self._next_employee_id = 101
 
@@ -15,7 +15,7 @@ class EmployeeManager:
         return employee_id
 
     def get_all_employees(self):
-        return list(self._employees.values()) 
+        return self.repository.get_all() 
 
     def _get_employee_or_raise(self, employee_id):
         employee = self.search_employee(employee_id)
@@ -28,12 +28,15 @@ class EmployeeManager:
         return employee   
 
     def get_employee(self, employee_id):
-        return self._get_employee_or_raise(employee_id)
+            employee = self.repository.get_by_id(employee_id)
+            if employee is None:
+                raise EmployeeNotFoundError(employee_id)
+            return employee
 
     def update_employee_department(self,employee_id,department):
         employee = self._get_employee_or_raise(employee_id)
         employee.update_department(department)
-        self.storage.save(
+        self.repository.save(
             self.get_all_employees()
         )
         self.logger.info(
@@ -50,7 +53,7 @@ class EmployeeManager:
             department,
             salary
     ):
-        employee_id = self._generate_employee_id()
+        employee_id = self.repository.get_next_employee_id()
 
         employee = Employee(
             employee_id,
@@ -63,8 +66,8 @@ class EmployeeManager:
 
         self._employees[employee_id] = employee
 
-        self.storage.save(
-            self.get_all_employees()
+        self.repository.save(
+            employee
         )
         self.logger.info(
             "Employee %s added successfully",
@@ -76,7 +79,7 @@ class EmployeeManager:
         return self._employees.get(employee_id)
 
     def load_employees(self):
-        employee_data = self.storage.load()
+        employee_data = self.repository.load()
         for data in employee_data:
             employee = Employee.from_dict(data)
             self._employees[employee.employee_id] = employee
@@ -91,17 +94,17 @@ class EmployeeManager:
     department=None,
     salary=None
     ):
-        employee = self._get_employee_or_raise(employee_id)
+        employee = self.get_employee(employee_id)
 
         if department is not None:
             employee.update_department(department)
+
         if salary is not None:
             employee.update_salary(salary)
-        self.storage.save(self._employees.values())
-        return employee
+
+        return self.repository.update(employee)
 
     def delete_employee(self, employee_id):
-        employee = self._get_employee_or_raise(employee_id)
-        del self._employees[employee_id]
-        self.storage.save(self._employees.values())
-        return employee
+        employee = self.get_employee(employee_id)
+
+        return self.repository.delete(employee_id)
