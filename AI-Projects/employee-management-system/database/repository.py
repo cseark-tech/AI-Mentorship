@@ -1,4 +1,5 @@
 from database.models import EmployeeModel
+from sqlalchemy import select
 
 
 class EmployeeRepository:
@@ -15,13 +16,10 @@ class EmployeeRepository:
         return db_employee.to_domain()
 
     def get_by_id(self, employee_id):
-        db_employee = (
-            self.session.query(EmployeeModel)
-            .filter(
-                EmployeeModel.employee_id == employee_id
-            )
-            .first()
+        statement = select(EmployeeModel).where(
+        EmployeeModel.employee_id == employee_id
         )
+        db_employee = self.session.scalars(statement).first()
 
         if db_employee is None:
             return None
@@ -29,11 +27,8 @@ class EmployeeRepository:
         return db_employee.to_domain()
 
     def get_all(self):
-        db_employees = (
-            self.session
-            .query(EmployeeModel)
-            .all()
-        )
+        statement = select(EmployeeModel)
+        db_employees = self.session.scalars(statement).all()
 
         return [
             employee.to_domain()
@@ -52,13 +47,11 @@ class EmployeeRepository:
         ) + 1
 
     def update(self, employee):
-        db_employee = (
-            self.session.query(EmployeeModel)
-            .filter(
-                EmployeeModel.employee_id == employee.employee_id
-            )
-            .first()
+        statement = select(EmployeeModel).where(
+        EmployeeModel.employee_id == employee.employee_id
         )
+
+        db_employee = self.session.scalars(statement).first()
 
         if db_employee is None:
             return None
@@ -74,13 +67,10 @@ class EmployeeRepository:
         return db_employee.to_domain()
 
     def delete(self, employee_id):
-        db_employee = (
-            self.session.query(EmployeeModel)
-            .filter(
-                EmployeeModel.employee_id == employee_id
-            )
-            .first()
+        statement = select(EmployeeModel).where(
+            EmployeeModel.employee_id == employee_id
         )
+        db_employee = self.session.scalars(statement).first()
 
         if db_employee is None:
             return None
