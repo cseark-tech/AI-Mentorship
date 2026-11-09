@@ -8,8 +8,13 @@ from database.dependencies import get_db
 from database.repository import EmployeeRepository
 from managers.employee_manager import EmployeeManager
 from exceptions.employee_not_found_error import EmployeeNotFoundError
+from auth.routes import router as auth_router
+from fastapi import Depends
+from auth.dependencies import get_current_user
+from database.user_model import UserModel
 
 app = FastAPI()
+app.include_router(auth_router)
 
 @app.get("/")
 def home():
@@ -21,7 +26,7 @@ def home():
     "/employees",
     response_model=list[EmployeeResponse]
 )
-def get_employees(db=Depends(get_db)):
+def get_employees(db=Depends(get_db), current_user: UserModel = Depends(get_current_user)):
 
     repository = EmployeeRepository(db)
 
