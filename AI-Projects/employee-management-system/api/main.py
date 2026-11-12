@@ -10,7 +10,7 @@ from managers.employee_manager import EmployeeManager
 from exceptions.employee_not_found_error import EmployeeNotFoundError
 from auth.routes import router as auth_router
 from fastapi import Depends
-from auth.dependencies import get_current_user
+from auth.dependencies import get_current_user, require_admin
 from database.user_model import UserModel
 
 app = FastAPI()
@@ -43,7 +43,8 @@ def get_employees(db=Depends(get_db), current_user: UserModel = Depends(get_curr
           response_model=EmployeeCreateRequest,
           status_code=201)
 def create_employee(request: EmployeeCreateRequest,
-                    db=Depends(get_db)):
+                    db=Depends(get_db),
+                    current_user: UserModel = Depends(require_admin)):
     repository = EmployeeRepository(db)
     manager = EmployeeManager(repository)
     employee = manager.add_employee(
@@ -61,7 +62,8 @@ def create_employee(request: EmployeeCreateRequest,
 )
 def get_employee(
     employee_id: int,
-    db=Depends(get_db)
+    db=Depends(get_db),
+     current_user: UserModel = Depends(get_current_user)
 ):
 
     repository = EmployeeRepository(db)
@@ -79,11 +81,13 @@ def get_employee(
 @app.patch(
     "/employees/{employee_id}",
     response_model=EmployeeResponse
+     
 )
 def update_employee(
     employee_id: int,
     request: EmployeeUpdateRequest,
-    db=Depends(get_db)
+    db=Depends(get_db),
+    current_user: UserModel = Depends(require_admin)
 ):
     repository = EmployeeRepository(db)
     manager = EmployeeManager(repository)
@@ -110,7 +114,8 @@ def update_employee(
 
 @app.delete("/employees/{employee_id}",
             status_code=204)
-def delete_employee(employee_id: int, db=Depends(get_db)):
+def delete_employee(employee_id: int, db=Depends(get_db),
+                    current_user: UserModel = Depends(require_admin)):
     repository = EmployeeRepository(db)
     manager = EmployeeManager(repository)
     try:
