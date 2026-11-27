@@ -1,18 +1,18 @@
-import os
+
 import jwt
 
 from datetime import datetime, timedelta, timezone
-from dotenv import load_dotenv
+from config.settings import settings
 
-load_dotenv()
+settings.ACCESS_TOKEN_EXPIRE_MINUTES
+settings.JWT_SECRET
+settings.JWT_ALGORITHM
 
-SECRET_KEY = os.getenv("JWT_SECRET")
-
-if not SECRET_KEY:
+if not settings.JWT_SECRET:
     raise RuntimeError("JWT_SECRET is not configured")
 
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+settings.JWT_ALGORITHM = "HS256"
+settings.ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def create_access_token(
@@ -21,7 +21,7 @@ def create_access_token(
 ) -> str:
 
     expire = datetime.now(timezone.utc) + timedelta(
-        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
     )
 
     payload = {
@@ -32,8 +32,8 @@ def create_access_token(
 
     token = jwt.encode(
         payload,
-        SECRET_KEY,
-        algorithm=ALGORITHM
+        settings.JWT_SECRET,
+        algorithm=settings.JWT_ALGORITHM
     )
 
     return token
@@ -44,8 +44,8 @@ def verify_access_token(token: str):
     try:
         payload = jwt.decode(
             token,
-            SECRET_KEY,
-            algorithms=[ALGORITHM]
+            settings.JWT_SECRET,
+            algorithms=[settings.JWT_ALGORITHM]
         )
 
         return payload
